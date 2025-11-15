@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { ReactNode } from "react";
 import { getServerSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
