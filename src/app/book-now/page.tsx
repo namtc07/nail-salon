@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import EnhancedBookingForm from "@/components/enhanced-booking-form";
+import { Suspense } from "react";
+import BookingFormSkeleton from "@/components/booking-form-skeleton";
 
 export default function BookNowPage() {
   return (
@@ -18,7 +20,9 @@ export default function BookNowPage() {
           Chọn dịch vụ, thời gian và kỹ thuật viên phù hợp. Shop sẽ gửi SMS xác nhận sau khi kiểm tra lịch.
         </p>
       </motion.div>
-      <EnhancedBookingForm />
+      <Suspense fallback={<BookingFormSkeleton />}>
+        <EnhancedBookingForm />
+      </Suspense>
     </div>
   );
 }
