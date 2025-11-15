@@ -25,25 +25,15 @@ export async function POST(req: Request) {
     });
 
     if (!result.success) {
-      return NextResponse.json(
-        { error: "Không thể gửi email. Vui lòng thử lại sau." },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Không thể gửi email. Vui lòng thử lại sau." }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, message: "Gửi thành công! Chúng tôi sẽ liên hệ lại sớm." });
   } catch (e: any) {
     console.error("Contact form error:", e);
     if (e instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: e.errors[0].message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: e.errors[0].message }, { status: 400 });
     }
-    return NextResponse.json(
-      { error: "Có lỗi xảy ra. Vui lòng thử lại sau." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Có lỗi xảy ra. Vui lòng thử lại sau." }, { status: 500 });
   }
 }
-
