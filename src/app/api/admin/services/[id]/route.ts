@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 type Params = { params: { id: string } };
@@ -11,6 +10,7 @@ export async function PUT(req: Request, { params }: Params) {
   }
 
   try {
+    const { prisma } = await import("@/lib/prisma");
     const data = await req.json();
 
     const service = await prisma.service.update({
@@ -40,6 +40,7 @@ export async function DELETE(_req: Request, { params }: Params) {
   }
 
   try {
+    const { prisma } = await import("@/lib/prisma");
     await prisma.service.delete({
       where: { id },
     });
