@@ -27,7 +27,7 @@ export default function BookingActions({ bookingId, disabled }: { bookingId: num
       <Button size="sm" disabled={pending} onClick={() => handle("confirm")}>
         Confirm
       </Button>
-      <Button size="sm" variant="destructive" disabled={pending} onClick={() => handle("reject")}>
+      <Button size="sm" variant="danger" disabled={pending} onClick={() => handle("reject")}>
         Reject
       </Button>
     </div>

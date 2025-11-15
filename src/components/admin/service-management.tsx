@@ -81,7 +81,7 @@ export default function ServiceManagement({ initialServices }: { initialServices
 
       if (res.ok) {
         const updatedService = await res.json();
-        
+
         if (editing) {
           // Cập nhật service đã sửa
           setServices((prev) => {
@@ -106,7 +106,7 @@ export default function ServiceManagement({ initialServices }: { initialServices
             });
           });
         }
-        
+
         resetForm();
         router.refresh(); // Refresh để sync với server
       } else {
@@ -147,30 +147,20 @@ export default function ServiceManagement({ initialServices }: { initialServices
               <h3 className="mb-3 text-lg font-semibold">{category}</h3>
               <div className="space-y-2">
                 {items.map((s) => (
-                  <div
-                    key={s.id}
-                    className="flex items-center justify-between rounded-lg border p-3"
-                  >
+                  <div key={s.id} className="flex items-center justify-between rounded-lg border p-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <p className="font-medium">{s.name}</p>
                         <Badge>{s.duration} min</Badge>
                         <Badge variant="outline">{s.price.toLocaleString()}₫</Badge>
                       </div>
-                      {s.description && (
-                        <p className="text-sm text-muted-foreground">{s.description}</p>
-                      )}
+                      {s.description && <p className="text-sm text-muted-foreground">{s.description}</p>}
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => startEdit(s)}>
                         Sửa
                       </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDelete(s.id)}
-                        disabled={pending}
-                      >
+                      <Button size="sm" variant="danger" onClick={() => handleDelete(s.id)} disabled={pending}>
                         Xóa
                       </Button>
                     </div>
@@ -191,11 +181,7 @@ export default function ServiceManagement({ initialServices }: { initialServices
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="mb-1 block text-sm font-medium">Tên dịch vụ</label>
-                <Input
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  required
-                />
+                <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">Mô tả</label>
@@ -251,4 +237,3 @@ export default function ServiceManagement({ initialServices }: { initialServices
     </div>
   );
 }
-
