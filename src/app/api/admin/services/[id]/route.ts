@@ -1,6 +1,3 @@
-export const runtime = "nodejs"; // chạy trên Node, không phải Edge
-export const dynamic = "force-dynamic"; // bỏ qua static analysis
-
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
