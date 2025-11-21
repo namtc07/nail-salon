@@ -16,10 +16,15 @@ type Service = {
 
 async function getServices(): Promise<Service[]> {
   // Fetch directly from database with caching
-  const services = await prisma.service.findMany({
-    orderBy: [{ category: "asc" }, { name: "asc" }],
-  });
-  return services;
+  try {
+    const services = await prisma.service.findMany({
+      orderBy: [{ category: "asc" }, { name: "asc" }],
+    });
+    return services;
+  } catch (error) {
+    console.error("Không thể tải danh sách dịch vụ", error);
+    return [];
+  }
 }
 
 function MenusContent() {
@@ -32,6 +37,20 @@ function MenusContent() {
 
 async function MenusContentInner() {
   const services = await getServices();
+
+  if (services.length === 0) {
+    return (
+      <Card className="max-w-3xl mx-auto">
+        <CardHeader>
+          <h1 className="text-2xl font-bold text-brand-dark">Service Menu</h1>
+        </CardHeader>
+        <CardContent className="space-y-2 text-slate-600">
+          <p>Hiện chúng tôi chưa tải được danh sách dịch vụ.</p>
+          <p>Vui lòng thử lại sau vài phút hoặc kiểm tra kết nối cơ sở dữ liệu.</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   type Service = (typeof services)[number];
   const grouped = services.reduce((acc: Record<string, Service[]>, s: Service) => {
@@ -97,5 +116,5 @@ export default function MenusPage() {
   return <MenusContent />;
 }
 
-// Cache for 60 seconds - data will be fresh but not refetched on every visit
-export const revalidate = 60;
+// Tránh pre-render lúc build để không cần kết nối DB ở build step (Vercel)
+export const dynamic = "force-dynamic";
